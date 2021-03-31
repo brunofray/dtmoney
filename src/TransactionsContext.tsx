@@ -43,6 +43,11 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   }, []);
 
   async function createTransaction(transactionInput: TransactionInput) {
+    
+    if ( transactionInput.type === 'withdraw' ) {
+      transactionInput.amount = transactionInput.amount * -1;
+    }
+    
     const response = await api.post('/transactions', {
       ...transactionInput,
       createdAt: new Date(),
